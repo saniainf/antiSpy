@@ -32,7 +32,6 @@ namespace antiSpy
 
             gScreenShot = Graphics.FromImage(bmpScreenShot);
 
-            //TODO заменить на настройки
             pathManual = Properties.Settings.Default.pathManual;
             pathAuto = Properties.Settings.Default.pathAuto;
             pathLan = Properties.Settings.Default.pathLan;
@@ -40,7 +39,6 @@ namespace antiSpy
             timer.Interval = Properties.Settings.Default.timer * 1000;
             numTimerPref.Value = Properties.Settings.Default.timer;
 
-            //TODO заменить на настройки
             if (mode)
             {
                 autoTrayMenuItem.Checked = true;
@@ -56,18 +54,33 @@ namespace antiSpy
             HotKeyManager.RegisterHotKey(Keys.End, KeyModifiers.Alt);
             HotKeyManager.HotKeyPressed += new EventHandler<HotKeyEventArgs>(gkh_KeyDown);
 
-            //сделать иконку невидимой
-            trayIcon.Visible = true;
-            //меню иконки в трее
-            trayIcon.ContextMenuStrip = trayMenu;
-
             //вкл таймер
             timer.Enabled = true;
         }
 
+        //загрузка формы
+        private void fAntiSpy_Load(object sender, EventArgs e)
+        {
+            //this.WindowState = FormWindowState.Minimized;
+        }
+
+        //закрытие формы
+        private void fAntiSpyClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        //выход
+        //TODO чето он кривой
+        private void closeTrayMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Application.Exit();
+        }
+
         private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            trayIcon.Visible = false;
             this.ShowInTaskbar = true;
             this.WindowState = FormWindowState.Normal;
         }
@@ -87,23 +100,18 @@ namespace antiSpy
             if (!mode)
             {
                 makeScrShot();
-
-                //сохранить картинку с именем текущей даты
+                //сохранить картинку с именем текущей даты в мануал папку
                 bmpScreenShot.Save(pathManual + DateTime.Now.ToString("yyMMdd_HHmmss") + ".jpg", ImageFormat.Jpeg);
-                lstLog.Items.Add("press btn");
             }
         }
 
         //тик таймера
         private void timer_Tick(object sender, EventArgs e)
         {
-            lstLog.Items.Add("tic");
-
             if (mode)
             {
                 makeScrShot();
-
-                //сохранить картинку с именем компа 
+                //сохранить картинку с именем компа в авто папку
                 bmpScreenShot.Save(pathAuto + Environment.MachineName + ".jpg", ImageFormat.Jpeg);
             }
             //переместить файл
@@ -118,40 +126,28 @@ namespace antiSpy
                0, 0,
                Screen.PrimaryScreen.Bounds.Size,
                CopyPixelOperation.SourceCopy);
-
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.Image = bmpScreenShot;
         }
 
         //переместить файл
         private void fileMove()
         {
-            if (mode)
+            if (mode) //авто режим
             {
                 if (File.Exists(pathAuto + Environment.MachineName + ".jpg"))
                 {
                     File.Delete(pathLan + Environment.MachineName + ".jpg");
                     File.Move(pathAuto + Environment.MachineName + ".jpg", pathLan + Environment.MachineName + ".jpg");
-                    lstLog.Items.Add("move auto");
                 }
             }
-            else
+            else //ручной режим
             {
                 string[] allFiles = Directory.GetFiles(pathManual);
                 if (allFiles.GetLength(0) > 0)
                 {
                     File.Delete(pathLan + Environment.MachineName + ".jpg");
                     File.Move(allFiles[0], pathLan + Environment.MachineName + ".jpg");
-                    lstLog.Items.Add("move manually");
                 }
             }
-        }
-
-        # region mode switch
-
-        private void closeTrayMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
         }
 
         private void switchAuto(object sender, EventArgs e)
@@ -181,7 +177,7 @@ namespace antiSpy
                 Properties.Settings.Default.Save();
             }
         }
-        # endregion
+
 
         private void numTimerPref_ValueChanged(object sender, EventArgs e)
         {
