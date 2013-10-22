@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="antiSpy.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="pathManual" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\scr\</Value>
+    </Setting>
+    <Setting Name="pathAuto" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\scr\auto\</Value>
+    </Setting>
+    <Setting Name="pathLan" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d:\scr\lan\</Value>
+    </Setting>
+    <Setting Name="mode" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="timer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
