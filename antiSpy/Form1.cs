@@ -22,7 +22,6 @@ namespace antiSpy
         Graphics gScreenShot;
 
         string pathManual;
-        string pathAuto;
         string pathLan;
         bool mode; //true - Auto, false - Manual
 
@@ -32,12 +31,28 @@ namespace antiSpy
 
             gScreenShot = Graphics.FromImage(bmpScreenShot);
 
+            //считать настройки
             pathManual = Properties.Settings.Default.pathManual;
-            pathAuto = Properties.Settings.Default.pathAuto;
             pathLan = Properties.Settings.Default.pathLan;
             mode = Properties.Settings.Default.mode;
             timer.Interval = Properties.Settings.Default.timer * 1000;
             numTimerPref.Value = Properties.Settings.Default.timer;
+
+            //событие нажатия кнопки
+            HotKeyManager.RegisterHotKey(Keys.End, KeyModifiers.Alt);
+            HotKeyManager.HotKeyPressed += new EventHandler<HotKeyEventArgs>(gkh_KeyDown);
+
+            //вкл таймер
+            timer.Enabled = true;
+        }
+
+        #region всякие настройки формы
+
+        //загрузка формы
+        private void fAntiSpy_Load(object sender, EventArgs e)
+        {
+            tbManualPath.Text = pathManual;
+            tbLanPath.Text = pathLan;
 
             if (mode)
             {
@@ -50,25 +65,14 @@ namespace antiSpy
                 btnManual.Enabled = false;
             }
 
-            //событие нажатия кнопки
-            HotKeyManager.RegisterHotKey(Keys.End, KeyModifiers.Alt);
-            HotKeyManager.HotKeyPressed += new EventHandler<HotKeyEventArgs>(gkh_KeyDown);
-
-            //вкл таймер
-            timer.Enabled = true;
-        }
-
-        //загрузка формы
-        private void fAntiSpy_Load(object sender, EventArgs e)
-        {
             //this.WindowState = FormWindowState.Minimized;
         }
 
         //закрытие формы
         private void fAntiSpyClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            this.WindowState = FormWindowState.Minimized;
+            //e.Cancel = true;
+            //this.WindowState = FormWindowState.Minimized;
         }
 
         //выход
@@ -94,6 +98,10 @@ namespace antiSpy
             }
         }
 
+        #endregion
+
+        #region основное
+
         //перехват кнопки
         private void gkh_KeyDown(object sender, HotKeyEventArgs e)
         {
@@ -112,7 +120,7 @@ namespace antiSpy
             {
                 makeScrShot();
                 //сохранить картинку с именем компа в авто папку
-                bmpScreenShot.Save(pathAuto + Environment.MachineName + ".jpg", ImageFormat.Jpeg);
+                bmpScreenShot.Save(Environment.MachineName + ".jpg", ImageFormat.Jpeg);
             }
             //переместить файл
             fileMove();
@@ -133,10 +141,10 @@ namespace antiSpy
         {
             if (mode) //авто режим
             {
-                if (File.Exists(pathAuto + Environment.MachineName + ".jpg"))
+                if (File.Exists(Environment.MachineName + ".jpg"))
                 {
                     File.Delete(pathLan + Environment.MachineName + ".jpg");
-                    File.Move(pathAuto + Environment.MachineName + ".jpg", pathLan + Environment.MachineName + ".jpg");
+                    File.Move(Environment.MachineName + ".jpg", pathLan + Environment.MachineName + ".jpg");
                 }
             }
             else //ручной режим
@@ -148,6 +156,21 @@ namespace antiSpy
                     File.Move(allFiles[0], pathLan + Environment.MachineName + ".jpg");
                 }
             }
+        }
+
+        #endregion
+
+        #region интерфейс
+
+        //сохранить настройки и обновить поля
+        private void btnSavePref_Click(object sender, EventArgs e)
+        {
+            //изменить таймер
+            timer.Interval = (int)numTimerPref.Value * 1000;
+
+            //сохранить настройки
+            Properties.Settings.Default.timer = (int)numTimerPref.Value;
+            Properties.Settings.Default.Save();
         }
 
         private void switchAuto(object sender, EventArgs e)
@@ -178,13 +201,7 @@ namespace antiSpy
             }
         }
 
-
-        private void numTimerPref_ValueChanged(object sender, EventArgs e)
-        {
-            timer.Interval = (int)numTimerPref.Value * 1000;
-            Properties.Settings.Default.timer = (int)numTimerPref.Value;
-            Properties.Settings.Default.Save();
-        }
+        #endregion
     }
 
     #region hotkey

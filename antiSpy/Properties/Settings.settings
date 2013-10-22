@@ -5,9 +5,6 @@
     <Setting Name="pathManual" Type="System.String" Scope="User">
       <Value Profile="(Default)">d:\scr\</Value>
     </Setting>
-    <Setting Name="pathAuto" Type="System.String" Scope="User">
-      <Value Profile="(Default)">d:\scr\auto\</Value>
-    </Setting>
     <Setting Name="pathLan" Type="System.String" Scope="User">
       <Value Profile="(Default)">d:\scr\lan\</Value>
     </Setting>

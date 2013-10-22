@@ -141,7 +141,6 @@
             0,
             0,
             0});
-            this.numTimerPref.ValueChanged += new System.EventHandler(this.numTimerPref_ValueChanged);
             // 
             // groupBoxMode
             // 
@@ -248,6 +247,7 @@
             this.btnSavePref.TabIndex = 8;
             this.btnSavePref.Text = "Сохранить настройки";
             this.btnSavePref.UseVisualStyleBackColor = true;
+            this.btnSavePref.Click += new System.EventHandler(this.btnSavePref_Click);
             // 
             // fAntiSpy
             // 

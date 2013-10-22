@@ -37,18 +37,6 @@ namespace antiSpy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("d:\\scr\\auto\\")]
-        public string pathAuto {
-            get {
-                return ((string)(this["pathAuto"]));
-            }
-            set {
-                this["pathAuto"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("d:\\scr\\lan\\")]
         public string pathLan {
             get {
