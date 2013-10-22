@@ -50,6 +50,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSavePref = new System.Windows.Forms.Button();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.trayMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTimerPref)).BeginInit();
             this.groupBoxMode.SuspendLayout();
@@ -179,6 +180,7 @@
             this.btnLanPath.TabIndex = 13;
             this.btnLanPath.Text = "...";
             this.btnLanPath.UseVisualStyleBackColor = true;
+            this.btnLanPath.Click += new System.EventHandler(this.btnLanPath_Click);
             // 
             // btnManualPath
             // 
@@ -188,6 +190,7 @@
             this.btnManualPath.TabIndex = 12;
             this.btnManualPath.Text = "...";
             this.btnManualPath.UseVisualStyleBackColor = true;
+            this.btnManualPath.Click += new System.EventHandler(this.btnManualPath_Click);
             // 
             // tbLanPath
             // 
@@ -298,6 +301,7 @@
         private System.Windows.Forms.TextBox tbLanPath;
         private System.Windows.Forms.Button btnLanPath;
         private System.Windows.Forms.Button btnManualPath;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
     }
 }
 

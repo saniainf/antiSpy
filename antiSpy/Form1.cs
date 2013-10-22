@@ -31,12 +31,8 @@ namespace antiSpy
 
             gScreenShot = Graphics.FromImage(bmpScreenShot);
 
-            //считать настройки
-            pathManual = Properties.Settings.Default.pathManual;
-            pathLan = Properties.Settings.Default.pathLan;
-            mode = Properties.Settings.Default.mode;
-            timer.Interval = Properties.Settings.Default.timer * 1000;
-            numTimerPref.Value = Properties.Settings.Default.timer;
+            //настройки в поля
+            applyPref();
 
             //событие нажатия кнопки
             HotKeyManager.RegisterHotKey(Keys.End, KeyModifiers.Alt);
@@ -51,9 +47,6 @@ namespace antiSpy
         //загрузка формы
         private void fAntiSpy_Load(object sender, EventArgs e)
         {
-            tbManualPath.Text = pathManual;
-            tbLanPath.Text = pathLan;
-
             if (mode)
             {
                 autoTrayMenuItem.Checked = true;
@@ -102,6 +95,20 @@ namespace antiSpy
 
         #region основное
 
+        //настройки в поля
+        private void applyPref()
+        {
+            pathManual = Properties.Settings.Default.pathManual;
+            pathLan = Properties.Settings.Default.pathLan;
+            mode = Properties.Settings.Default.mode;
+            numTimerPref.Value = Properties.Settings.Default.timer;
+
+            tbManualPath.Text = pathManual;
+            tbLanPath.Text = pathLan;
+
+            timer.Interval = Properties.Settings.Default.timer * 1000;
+        }
+
         //перехват кнопки
         private void gkh_KeyDown(object sender, HotKeyEventArgs e)
         {
@@ -143,8 +150,18 @@ namespace antiSpy
             {
                 if (File.Exists(Environment.MachineName + ".jpg"))
                 {
-                    File.Delete(pathLan + Environment.MachineName + ".jpg");
-                    File.Move(Environment.MachineName + ".jpg", pathLan + Environment.MachineName + ".jpg");
+                    try
+                    {
+                        //удалить файл
+                        File.Delete(pathLan + Environment.MachineName + ".jpg");
+
+                        //переместить новый
+                        File.Move(Environment.MachineName + ".jpg", pathLan + Environment.MachineName + ".jpg");
+                    }
+                    catch (IOException)
+                    {
+                        trayIcon.ShowBalloonTip(500, "Alert", "no delete file", ToolTipIcon.Info);
+                    }
                 }
             }
             else //ручной режим
@@ -152,8 +169,18 @@ namespace antiSpy
                 string[] allFiles = Directory.GetFiles(pathManual);
                 if (allFiles.GetLength(0) > 0)
                 {
-                    File.Delete(pathLan + Environment.MachineName + ".jpg");
-                    File.Move(allFiles[0], pathLan + Environment.MachineName + ".jpg");
+                    try
+                    {
+                        //удалить файл
+                        File.Delete(pathLan + Environment.MachineName + ".jpg");
+
+                        //переместить новый
+                        File.Move(allFiles[0], pathLan + Environment.MachineName + ".jpg");
+                    }
+                    catch (IOException)
+                    {
+                        trayIcon.ShowBalloonTip(500, "Alert", "delete file busy", ToolTipIcon.Info);
+                    }
                 }
             }
         }
@@ -165,12 +192,20 @@ namespace antiSpy
         //сохранить настройки и обновить поля
         private void btnSavePref_Click(object sender, EventArgs e)
         {
-            //изменить таймер
-            timer.Interval = (int)numTimerPref.Value * 1000;
-
-            //сохранить настройки
+            //изменить настройки
             Properties.Settings.Default.timer = (int)numTimerPref.Value;
+            Properties.Settings.Default.mode = mode;
+
+            if (!tbLanPath.Text.EndsWith("\\"))
+                Properties.Settings.Default.pathLan = tbLanPath.Text + "\\";
+            if (!tbManualPath.Text.EndsWith("\\"))
+                Properties.Settings.Default.pathManual = tbManualPath.Text + "\\";
+
+            //и сохранить
             Properties.Settings.Default.Save();
+
+            //и пременить
+            applyPref();
         }
 
         private void switchAuto(object sender, EventArgs e)
@@ -198,6 +233,22 @@ namespace antiSpy
                 mode = false;
                 Properties.Settings.Default.mode = false;
                 Properties.Settings.Default.Save();
+            }
+        }
+
+        private void btnManualPath_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                tbManualPath.Text = folderBrowserDialog.SelectedPath;
+            }
+        }
+
+        private void btnLanPath_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                tbLanPath.Text = folderBrowserDialog.SelectedPath;
             }
         }
 
