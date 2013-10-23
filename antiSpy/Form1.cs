@@ -106,7 +106,7 @@ namespace antiSpy
             tbManualPath.Text = pathManual;
             tbLanPath.Text = pathLan;
 
-            timer.Interval = Properties.Settings.Default.timer * 1000;
+            timer.Interval = Properties.Settings.Default.timer * 60000;
         }
 
         //перехват кнопки
