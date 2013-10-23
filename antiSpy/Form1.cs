@@ -58,14 +58,14 @@ namespace antiSpy
                 btnManual.Enabled = false;
             }
 
-            //this.WindowState = FormWindowState.Minimized;
+            this.WindowState = FormWindowState.Minimized;
         }
 
         //закрытие формы
         private void fAntiSpyClosing(object sender, FormClosingEventArgs e)
         {
-            //e.Cancel = true;
-            //this.WindowState = FormWindowState.Minimized;
+            e.Cancel = true;
+            this.WindowState = FormWindowState.Minimized;
         }
 
         //выход
