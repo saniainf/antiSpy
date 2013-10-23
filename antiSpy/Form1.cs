@@ -106,7 +106,7 @@ namespace antiSpy
             tbManualPath.Text = pathManual;
             tbLanPath.Text = pathLan;
 
-            timer.Interval = Properties.Settings.Default.timer * 60000;
+            timer.Interval = Properties.Settings.Default.timer * 1000;
         }
 
         //перехват кнопки
@@ -160,7 +160,7 @@ namespace antiSpy
                     }
                     catch (IOException)
                     {
-                        trayIcon.ShowBalloonTip(500, "Alert", "no delete file", ToolTipIcon.Info);
+                        trayIcon.ShowBalloonTip(500, "Alert", "no move", ToolTipIcon.Info);
                     }
                 }
             }
@@ -174,12 +174,17 @@ namespace antiSpy
                         //удалить файл
                         File.Delete(pathLan + Environment.MachineName + ".jpg");
 
+                        //изменить даты
+                        File.SetCreationTime(allFiles[0], DateTime.Now);
+                        File.SetLastWriteTime(allFiles[0], DateTime.Now);
+                        File.SetLastAccessTime(allFiles[0], DateTime.Now);
+
                         //переместить новый
                         File.Move(allFiles[0], pathLan + Environment.MachineName + ".jpg");
                     }
                     catch (IOException)
                     {
-                        trayIcon.ShowBalloonTip(500, "Alert", "delete file busy", ToolTipIcon.Info);
+                        trayIcon.ShowBalloonTip(500, "Alert", "no move", ToolTipIcon.Info);
                     }
                 }
             }
