@@ -106,7 +106,7 @@ namespace antiSpy
             tbManualPath.Text = pathManual;
             tbLanPath.Text = pathLan;
 
-            timer.Interval = Properties.Settings.Default.timer * 1000;
+            timer.Interval = Properties.Settings.Default.timer * 60000;
         }
 
         //перехват кнопки
@@ -169,6 +169,9 @@ namespace antiSpy
                 string[] allFiles = Directory.GetFiles(pathManual);
                 if (allFiles.GetLength(0) > 0)
                 {
+                    if (allFiles.GetLength(0) < 3)
+                        trayIcon.ShowBalloonTip(500, "Alert", "left" + allFiles.GetLength(0), ToolTipIcon.Info);
+
                     try
                     {
                         //удалить файл
