@@ -206,8 +206,13 @@ namespace antiSpy
 
             if (!tbLanPath.Text.EndsWith("\\"))
                 Properties.Settings.Default.pathLan = tbLanPath.Text + "\\";
+            else
+                Properties.Settings.Default.pathLan = tbLanPath.Text;
+
             if (!tbManualPath.Text.EndsWith("\\"))
                 Properties.Settings.Default.pathManual = tbManualPath.Text + "\\";
+            else
+                Properties.Settings.Default.pathManual = tbManualPath.Text;
 
             //и сохранить
             Properties.Settings.Default.Save();
