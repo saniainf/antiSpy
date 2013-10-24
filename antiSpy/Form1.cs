@@ -161,7 +161,7 @@ namespace antiSpy
                 if (allFiles.GetLength(0) > 0)
                 {
                     if (allFiles.GetLength(0) < 4)
-                        trayIcon.ShowBalloonTip(500, "Alert", "left" + (allFiles.GetLength(0) - 1), ToolTipIcon.Info);
+                        trayIcon.ShowBalloonTip(500, "Alert", "left " + (allFiles.GetLength(0) - 1), ToolTipIcon.Info);
 
                     try
                     {
