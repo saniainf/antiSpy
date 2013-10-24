@@ -23,7 +23,7 @@ namespace antiSpy
 
         string pathManual;
         string pathLan;
-        bool mode; //true - Auto, false - Manual
+        bool mode = true; //true - Auto, false - Manual
 
         public fAntiSpy()
         {
@@ -47,16 +47,8 @@ namespace antiSpy
         //загрузка формы
         private void fAntiSpy_Load(object sender, EventArgs e)
         {
-            if (mode)
-            {
-                autoTrayMenuItem.Checked = true;
-                btnAuto.Enabled = false;
-            }
-            else
-            {
-                manualTrayMenuItem.Checked = true;
-                btnManual.Enabled = false;
-            }
+            autoTrayMenuItem.Checked = true;
+            btnAuto.Enabled = false;
 
             this.WindowState = FormWindowState.Minimized;
         }
@@ -100,7 +92,6 @@ namespace antiSpy
         {
             pathManual = Properties.Settings.Default.pathManual;
             pathLan = Properties.Settings.Default.pathLan;
-            mode = Properties.Settings.Default.mode;
             numTimerPref.Value = Properties.Settings.Default.timer;
 
             tbManualPath.Text = pathManual;
@@ -202,7 +193,6 @@ namespace antiSpy
         {
             //изменить настройки
             Properties.Settings.Default.timer = (int)numTimerPref.Value;
-            Properties.Settings.Default.mode = mode;
 
             if (!tbLanPath.Text.EndsWith("\\"))
                 Properties.Settings.Default.pathLan = tbLanPath.Text + "\\";
