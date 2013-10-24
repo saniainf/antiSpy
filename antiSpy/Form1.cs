@@ -160,8 +160,8 @@ namespace antiSpy
                 string[] allFiles = Directory.GetFiles(pathManual);
                 if (allFiles.GetLength(0) > 0)
                 {
-                    if (allFiles.GetLength(0) < 3)
-                        trayIcon.ShowBalloonTip(500, "Alert", "left" + allFiles.GetLength(0), ToolTipIcon.Info);
+                    if (allFiles.GetLength(0) < 4)
+                        trayIcon.ShowBalloonTip(500, "Alert", "left" + (allFiles.GetLength(0) - 1), ToolTipIcon.Info);
 
                     try
                     {
