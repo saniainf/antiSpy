@@ -97,7 +97,7 @@ namespace antiSpy
             tbManualPath.Text = pathManual;
             tbLanPath.Text = pathLan;
 
-            timer.Interval = Properties.Settings.Default.timer * 60000;
+            timer.Interval = Properties.Settings.Default.timer * 1000; //60000
         }
 
         //перехват кнопки
@@ -114,14 +114,19 @@ namespace antiSpy
         //тик таймера
         private void timer_Tick(object sender, EventArgs e)
         {
-            if (mode)
+            if (this.WindowState != FormWindowState.Minimized)
+                trayIcon.ShowBalloonTip(500, "Alert", "окно не свернуто, тик таймера пропущен", ToolTipIcon.Info);
+            else
             {
-                makeScrShot();
-                //сохранить картинку с именем компа в авто папку
-                bmpScreenShot.Save(Environment.MachineName + ".jpg", ImageFormat.Jpeg);
+                if (mode)
+                {
+                    makeScrShot();
+                    //сохранить картинку с именем компа в авто папку
+                    bmpScreenShot.Save(Environment.MachineName + ".jpg", ImageFormat.Jpeg);
+                }
+                //переместить файл
+                fileMove();
             }
-            //переместить файл
-            fileMove();
         }
 
         //сделать новый скрин в bmpScreenShot
@@ -220,8 +225,6 @@ namespace antiSpy
                 btnAuto.Enabled = false;
                 btnManual.Enabled = true;
                 mode = true;
-                Properties.Settings.Default.mode = true;
-                Properties.Settings.Default.Save();
             }
         }
 
@@ -234,8 +237,17 @@ namespace antiSpy
                 btnAuto.Enabled = true;
                 btnManual.Enabled = false;
                 mode = false;
-                Properties.Settings.Default.mode = false;
-                Properties.Settings.Default.Save();
+
+                timer.Stop();
+                if (MessageBox.Show("Очистить локальную папку?", "Ручной режим", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    DirectoryInfo dirInfo = new DirectoryInfo(pathManual);
+                    foreach (FileInfo file in dirInfo.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                }
+                timer.Start();
             }
         }
 
