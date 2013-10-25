@@ -51,6 +51,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnSavePref = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnOpenManualPath = new System.Windows.Forms.Button();
+            this.btnOpenLanPath = new System.Windows.Forms.Button();
             this.trayMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTimerPref)).BeginInit();
             this.groupBoxMode.SuspendLayout();
@@ -156,6 +158,8 @@
             // 
             // groupBoxPref
             // 
+            this.groupBoxPref.Controls.Add(this.btnOpenLanPath);
+            this.groupBoxPref.Controls.Add(this.btnOpenManualPath);
             this.groupBoxPref.Controls.Add(this.btnLanPath);
             this.groupBoxPref.Controls.Add(this.btnManualPath);
             this.groupBoxPref.Controls.Add(this.tbLanPath);
@@ -174,7 +178,7 @@
             // 
             // btnLanPath
             // 
-            this.btnLanPath.Location = new System.Drawing.Point(134, 120);
+            this.btnLanPath.Location = new System.Drawing.Point(107, 120);
             this.btnLanPath.Name = "btnLanPath";
             this.btnLanPath.Size = new System.Drawing.Size(24, 19);
             this.btnLanPath.TabIndex = 13;
@@ -184,7 +188,7 @@
             // 
             // btnManualPath
             // 
-            this.btnManualPath.Location = new System.Drawing.Point(134, 73);
+            this.btnManualPath.Location = new System.Drawing.Point(107, 73);
             this.btnManualPath.Name = "btnManualPath";
             this.btnManualPath.Size = new System.Drawing.Size(24, 19);
             this.btnManualPath.TabIndex = 12;
@@ -196,14 +200,14 @@
             // 
             this.tbLanPath.Location = new System.Drawing.Point(6, 120);
             this.tbLanPath.Name = "tbLanPath";
-            this.tbLanPath.Size = new System.Drawing.Size(122, 20);
+            this.tbLanPath.Size = new System.Drawing.Size(97, 20);
             this.tbLanPath.TabIndex = 11;
             // 
             // tbManualPath
             // 
             this.tbManualPath.Location = new System.Drawing.Point(6, 73);
             this.tbManualPath.Name = "tbManualPath";
-            this.tbManualPath.Size = new System.Drawing.Size(122, 20);
+            this.tbManualPath.Size = new System.Drawing.Size(97, 20);
             this.tbManualPath.TabIndex = 10;
             // 
             // label4
@@ -251,6 +255,26 @@
             this.btnSavePref.Text = "Сохранить настройки";
             this.btnSavePref.UseVisualStyleBackColor = true;
             this.btnSavePref.Click += new System.EventHandler(this.btnSavePref_Click);
+            // 
+            // btnOpenManualPath
+            // 
+            this.btnOpenManualPath.Location = new System.Drawing.Point(134, 73);
+            this.btnOpenManualPath.Name = "btnOpenManualPath";
+            this.btnOpenManualPath.Size = new System.Drawing.Size(24, 19);
+            this.btnOpenManualPath.TabIndex = 14;
+            this.btnOpenManualPath.Text = ">";
+            this.btnOpenManualPath.UseVisualStyleBackColor = true;
+            this.btnOpenManualPath.Click += new System.EventHandler(this.btnOpenManualPath_Click);
+            // 
+            // btnOpenLanPath
+            // 
+            this.btnOpenLanPath.Location = new System.Drawing.Point(134, 120);
+            this.btnOpenLanPath.Name = "btnOpenLanPath";
+            this.btnOpenLanPath.Size = new System.Drawing.Size(24, 19);
+            this.btnOpenLanPath.TabIndex = 15;
+            this.btnOpenLanPath.Text = ">";
+            this.btnOpenLanPath.UseVisualStyleBackColor = true;
+            this.btnOpenLanPath.Click += new System.EventHandler(this.btnOpenLanPath_Click);
             // 
             // fAntiSpy
             // 
@@ -302,6 +326,8 @@
         private System.Windows.Forms.Button btnLanPath;
         private System.Windows.Forms.Button btnManualPath;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.Button btnOpenManualPath;
+        private System.Windows.Forms.Button btnOpenLanPath;
     }
 }
 

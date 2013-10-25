@@ -70,8 +70,15 @@ namespace antiSpy
 
         private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.ShowInTaskbar = true;
-            this.WindowState = FormWindowState.Normal;
+            if (WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+
+            else if (WindowState == FormWindowState.Normal)
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
         }
 
         private void fAntiSpy_Resize(object sender, EventArgs e)
@@ -79,7 +86,12 @@ namespace antiSpy
             if (WindowState == FormWindowState.Minimized)
             {
                 this.ShowInTaskbar = false;
-                trayIcon.Visible = true;
+                timer.Start();
+            }
+            else if (WindowState == FormWindowState.Normal)
+            {
+                this.ShowInTaskbar = true;
+                timer.Stop();
             }
         }
 
@@ -97,7 +109,7 @@ namespace antiSpy
             tbManualPath.Text = pathManual;
             tbLanPath.Text = pathLan;
 
-            timer.Interval = Properties.Settings.Default.timer * 1000; //60000
+            timer.Interval = Properties.Settings.Default.timer * 60000; //60000
         }
 
         //перехват кнопки
@@ -186,6 +198,14 @@ namespace antiSpy
                         trayIcon.ShowBalloonTip(500, "Alert", "no move", ToolTipIcon.Info);
                     }
                 }
+
+                //файла нет, изменить дату на серве
+                else
+                {
+                    File.SetCreationTime(pathLan + Environment.MachineName + ".jpg", DateTime.Now);
+                    File.SetLastWriteTime(pathLan + Environment.MachineName + ".jpg", DateTime.Now);
+                    File.SetLastAccessTime(pathLan + Environment.MachineName + ".jpg", DateTime.Now);
+                }
             }
         }
 
@@ -238,7 +258,6 @@ namespace antiSpy
                 btnManual.Enabled = false;
                 mode = false;
 
-                timer.Stop();
                 if (MessageBox.Show("Очистить локальную папку?", "Ручной режим", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     DirectoryInfo dirInfo = new DirectoryInfo(pathManual);
@@ -247,7 +266,6 @@ namespace antiSpy
                         file.Delete();
                     }
                 }
-                timer.Start();
             }
         }
 
@@ -265,6 +283,16 @@ namespace antiSpy
             {
                 tbLanPath.Text = folderBrowserDialog.SelectedPath;
             }
+        }
+
+        private void btnOpenManualPath_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer", Path.GetDirectoryName(pathManual));
+        }
+
+        private void btnOpenLanPath_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer", Path.GetDirectoryName(pathLan));
         }
 
         #endregion
