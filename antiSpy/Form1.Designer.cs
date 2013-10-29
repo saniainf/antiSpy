@@ -41,6 +41,8 @@
             this.numTimerPref = new System.Windows.Forms.NumericUpDown();
             this.groupBoxMode = new System.Windows.Forms.GroupBox();
             this.groupBoxPref = new System.Windows.Forms.GroupBox();
+            this.btnOpenLanPath = new System.Windows.Forms.Button();
+            this.btnOpenManualPath = new System.Windows.Forms.Button();
             this.btnLanPath = new System.Windows.Forms.Button();
             this.btnManualPath = new System.Windows.Forms.Button();
             this.tbLanPath = new System.Windows.Forms.TextBox();
@@ -51,8 +53,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnSavePref = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.btnOpenManualPath = new System.Windows.Forms.Button();
-            this.btnOpenLanPath = new System.Windows.Forms.Button();
             this.trayMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTimerPref)).BeginInit();
             this.groupBoxMode.SuspendLayout();
@@ -63,7 +63,7 @@
             // 
             this.trayIcon.ContextMenuStrip = this.trayMenu;
             this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
-            this.trayIcon.Text = "AntiSpy";
+            this.trayIcon.Text = "Export viewer";
             this.trayIcon.Visible = true;
             this.trayIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseDoubleClick);
             // 
@@ -74,27 +74,27 @@
             this.autoTrayMenuItem,
             this.closeTrayMenuItem});
             this.trayMenu.Name = "trayMenu";
-            this.trayMenu.Size = new System.Drawing.Size(158, 70);
+            this.trayMenu.Size = new System.Drawing.Size(153, 92);
             // 
             // manualTrayMenuItem
             // 
             this.manualTrayMenuItem.Name = "manualTrayMenuItem";
-            this.manualTrayMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.manualTrayMenuItem.Text = "в ручную";
+            this.manualTrayMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.manualTrayMenuItem.Text = "manually";
             this.manualTrayMenuItem.Click += new System.EventHandler(this.switchManual);
             // 
             // autoTrayMenuItem
             // 
             this.autoTrayMenuItem.Name = "autoTrayMenuItem";
-            this.autoTrayMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.autoTrayMenuItem.Text = "автоматически";
+            this.autoTrayMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.autoTrayMenuItem.Text = "automatically";
             this.autoTrayMenuItem.Click += new System.EventHandler(this.switchAuto);
             // 
             // closeTrayMenuItem
             // 
             this.closeTrayMenuItem.Name = "closeTrayMenuItem";
-            this.closeTrayMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.closeTrayMenuItem.Text = "выход";
+            this.closeTrayMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeTrayMenuItem.Text = "close";
             this.closeTrayMenuItem.Click += new System.EventHandler(this.closeTrayMenuItem_Click);
             // 
             // timer
@@ -108,7 +108,7 @@
             this.btnAuto.Name = "btnAuto";
             this.btnAuto.Size = new System.Drawing.Size(152, 25);
             this.btnAuto.TabIndex = 2;
-            this.btnAuto.Text = "Автоматически";
+            this.btnAuto.Text = "Path auto name";
             this.btnAuto.UseVisualStyleBackColor = true;
             this.btnAuto.Click += new System.EventHandler(this.switchAuto);
             // 
@@ -118,7 +118,7 @@
             this.btnManual.Name = "btnManual";
             this.btnManual.Size = new System.Drawing.Size(152, 25);
             this.btnManual.TabIndex = 3;
-            this.btnManual.Text = "В ручную";
+            this.btnManual.Text = "Path manually name";
             this.btnManual.UseVisualStyleBackColor = true;
             this.btnManual.Click += new System.EventHandler(this.switchManual);
             // 
@@ -154,7 +154,7 @@
             this.groupBoxMode.Size = new System.Drawing.Size(164, 80);
             this.groupBoxMode.TabIndex = 6;
             this.groupBoxMode.TabStop = false;
-            this.groupBoxMode.Text = "Режим работы";
+            this.groupBoxMode.Text = "Mode";
             // 
             // groupBoxPref
             // 
@@ -174,7 +174,27 @@
             this.groupBoxPref.Size = new System.Drawing.Size(164, 148);
             this.groupBoxPref.TabIndex = 7;
             this.groupBoxPref.TabStop = false;
-            this.groupBoxPref.Text = "Настройки";
+            this.groupBoxPref.Text = "Options";
+            // 
+            // btnOpenLanPath
+            // 
+            this.btnOpenLanPath.Location = new System.Drawing.Point(134, 120);
+            this.btnOpenLanPath.Name = "btnOpenLanPath";
+            this.btnOpenLanPath.Size = new System.Drawing.Size(24, 19);
+            this.btnOpenLanPath.TabIndex = 15;
+            this.btnOpenLanPath.Text = ">";
+            this.btnOpenLanPath.UseVisualStyleBackColor = true;
+            this.btnOpenLanPath.Click += new System.EventHandler(this.btnOpenLanPath_Click);
+            // 
+            // btnOpenManualPath
+            // 
+            this.btnOpenManualPath.Location = new System.Drawing.Point(134, 73);
+            this.btnOpenManualPath.Name = "btnOpenManualPath";
+            this.btnOpenManualPath.Size = new System.Drawing.Size(24, 19);
+            this.btnOpenManualPath.TabIndex = 14;
+            this.btnOpenManualPath.Text = ">";
+            this.btnOpenManualPath.UseVisualStyleBackColor = true;
+            this.btnOpenManualPath.Click += new System.EventHandler(this.btnOpenManualPath_Click);
             // 
             // btnLanPath
             // 
@@ -215,36 +235,36 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(3, 104);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(86, 13);
+            this.label4.Size = new System.Drawing.Size(70, 13);
             this.label4.TabIndex = 9;
-            this.label4.Text = "Куда сохранять";
+            this.label4.Text = "Path network";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(3, 57);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 13);
+            this.label3.Size = new System.Drawing.Size(73, 13);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Где брать";
+            this.label3.Text = "Path manually";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(125, 26);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(30, 13);
+            this.label2.Size = new System.Drawing.Size(26, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "мин.";
+            this.label2.Text = "time";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 26);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 13);
+            this.label1.Size = new System.Drawing.Size(42, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Таймер";
+            this.label1.Text = "Repeat";
             // 
             // btnSavePref
             // 
@@ -252,29 +272,9 @@
             this.btnSavePref.Name = "btnSavePref";
             this.btnSavePref.Size = new System.Drawing.Size(152, 25);
             this.btnSavePref.TabIndex = 8;
-            this.btnSavePref.Text = "Сохранить настройки";
+            this.btnSavePref.Text = "Apply";
             this.btnSavePref.UseVisualStyleBackColor = true;
             this.btnSavePref.Click += new System.EventHandler(this.btnSavePref_Click);
-            // 
-            // btnOpenManualPath
-            // 
-            this.btnOpenManualPath.Location = new System.Drawing.Point(134, 73);
-            this.btnOpenManualPath.Name = "btnOpenManualPath";
-            this.btnOpenManualPath.Size = new System.Drawing.Size(24, 19);
-            this.btnOpenManualPath.TabIndex = 14;
-            this.btnOpenManualPath.Text = ">";
-            this.btnOpenManualPath.UseVisualStyleBackColor = true;
-            this.btnOpenManualPath.Click += new System.EventHandler(this.btnOpenManualPath_Click);
-            // 
-            // btnOpenLanPath
-            // 
-            this.btnOpenLanPath.Location = new System.Drawing.Point(134, 120);
-            this.btnOpenLanPath.Name = "btnOpenLanPath";
-            this.btnOpenLanPath.Size = new System.Drawing.Size(24, 19);
-            this.btnOpenLanPath.TabIndex = 15;
-            this.btnOpenLanPath.Text = ">";
-            this.btnOpenLanPath.UseVisualStyleBackColor = true;
-            this.btnOpenLanPath.Click += new System.EventHandler(this.btnOpenLanPath_Click);
             // 
             // fAntiSpy
             // 
@@ -290,7 +290,7 @@
             this.MinimizeBox = false;
             this.Name = "fAntiSpy";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AntiSpy";
+            this.Text = "Export viewer";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fAntiSpyClosing);
             this.Load += new System.EventHandler(this.fAntiSpy_Load);
             this.Resize += new System.EventHandler(this.fAntiSpy_Resize);

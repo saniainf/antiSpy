@@ -86,12 +86,12 @@ namespace antiSpy
             if (WindowState == FormWindowState.Minimized)
             {
                 this.ShowInTaskbar = false;
-                timer.Start();
+                //timer.Start();
             }
             else if (WindowState == FormWindowState.Normal)
             {
                 this.ShowInTaskbar = true;
-                timer.Stop();
+                //timer.Stop();
             }
         }
 
@@ -126,19 +126,14 @@ namespace antiSpy
         //тик таймера
         private void timer_Tick(object sender, EventArgs e)
         {
-            if (this.WindowState != FormWindowState.Minimized)
-                trayIcon.ShowBalloonTip(500, "Alert", "окно не свернуто, тик таймера пропущен", ToolTipIcon.Info);
-            else
+            if (mode)
             {
-                if (mode)
-                {
-                    makeScrShot();
-                    //сохранить картинку с именем компа в авто папку
-                    bmpScreenShot.Save(Environment.MachineName + ".jpg", ImageFormat.Jpeg);
-                }
-                //переместить файл
-                fileMove();
+                makeScrShot();
+                //сохранить картинку с именем компа в авто папку
+                bmpScreenShot.Save(Environment.MachineName + ".jpg", ImageFormat.Jpeg);
             }
+            //переместить файл
+            fileMove();
         }
 
         //сделать новый скрин в bmpScreenShot
@@ -258,7 +253,7 @@ namespace antiSpy
                 btnManual.Enabled = false;
                 mode = false;
 
-                if (MessageBox.Show("Очистить локальную папку?", "Ручной режим", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show("Clear local dir?", "Manually mode", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     DirectoryInfo dirInfo = new DirectoryInfo(pathManual);
                     foreach (FileInfo file in dirInfo.GetFiles())
