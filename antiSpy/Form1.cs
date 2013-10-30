@@ -181,7 +181,7 @@ namespace antiSpy
                         File.Delete(pathLan + Environment.MachineName + ".jpg");
 
                         //изменить даты
-                        File.SetCreationTime(allFiles[0], DateTime.Now);
+                        //File.SetCreationTime(allFiles[0], DateTime.Now);
                         File.SetLastWriteTime(allFiles[0], DateTime.Now);
                         File.SetLastAccessTime(allFiles[0], DateTime.Now);
 
