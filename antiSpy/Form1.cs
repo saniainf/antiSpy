@@ -155,11 +155,17 @@ namespace antiSpy
                 {
                     try
                     {
+                        /*
                         //удалить файл
                         File.Delete(pathLan + Environment.MachineName + ".jpg");
 
                         //переместить новый
                         File.Move(Environment.MachineName + ".jpg", pathLan + Environment.MachineName + ".jpg");
+                        */
+
+                        //скопировать и удалить локальный
+                        File.Copy(Environment.MachineName + ".jpg", pathLan + Environment.MachineName + ".jpg", true);
+                        File.Delete(Environment.MachineName + ".jpg");
                     }
                     catch (IOException)
                     {
@@ -177,16 +183,22 @@ namespace antiSpy
 
                     try
                     {
-                        //удалить файл
-                        File.Delete(pathLan + Environment.MachineName + ".jpg");
-
                         //изменить даты
                         //File.SetCreationTime(allFiles[0], DateTime.Now);
                         File.SetLastWriteTime(allFiles[0], DateTime.Now);
                         File.SetLastAccessTime(allFiles[0], DateTime.Now);
 
+                        /*
+                        //удалить файл
+                        File.Delete(pathLan + Environment.MachineName + ".jpg");
+
                         //переместить новый
                         File.Move(allFiles[0], pathLan + Environment.MachineName + ".jpg");
+                        */
+
+                        //скопировать и удалить локальный
+                        File.Copy(allFiles[0], pathLan + Environment.MachineName + ".jpg", true);
+                        File.Delete(allFiles[0]);
                     }
                     catch (IOException)
                     {
@@ -197,7 +209,7 @@ namespace antiSpy
                 //файла нет, изменить дату на серве
                 else
                 {
-                    File.SetCreationTime(pathLan + Environment.MachineName + ".jpg", DateTime.Now);
+                    //File.SetCreationTime(pathLan + Environment.MachineName + ".jpg", DateTime.Now);
                     File.SetLastWriteTime(pathLan + Environment.MachineName + ".jpg", DateTime.Now);
                     File.SetLastAccessTime(pathLan + Environment.MachineName + ".jpg", DateTime.Now);
                 }
