@@ -56,8 +56,16 @@ namespace antiSpy
         //закрытие формы
         private void fAntiSpyClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            this.WindowState = FormWindowState.Minimized;
+            if (this.WindowState != FormWindowState.Minimized)
+            {
+                e.Cancel = true;
+                this.WindowState = FormWindowState.Minimized;
+            }
+            else
+            {
+                this.Close();
+                Application.Exit();
+            }
         }
 
         //выход
