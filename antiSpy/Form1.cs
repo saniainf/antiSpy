@@ -56,15 +56,10 @@ namespace antiSpy
         //закрытие формы
         private void fAntiSpyClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.WindowState != FormWindowState.Minimized)
+            if (this.WindowState == FormWindowState.Normal)
             {
                 e.Cancel = true;
                 this.WindowState = FormWindowState.Minimized;
-            }
-            else
-            {
-                this.Close();
-                Application.Exit();
             }
         }
 
@@ -72,6 +67,7 @@ namespace antiSpy
         //TODO чето он кривой
         private void closeTrayMenuItem_Click(object sender, EventArgs e)
         {
+            WindowState = FormWindowState.Minimized;
             this.Close();
             Application.Exit();
         }
@@ -308,6 +304,12 @@ namespace antiSpy
         private void btnOpenLanPath_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("explorer", Path.GetDirectoryName(pathLan));
+        }
+
+        private void trayMenu_Opening(object sender, CancelEventArgs e)
+        {
+            string[] allFiles = Directory.GetFiles(pathManual);
+            string lastSave = File.GetLastAccessTime(pathLan + Environment.MachineName + ".jpg").ToString();
         }
 
         #endregion

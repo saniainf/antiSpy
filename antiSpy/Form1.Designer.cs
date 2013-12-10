@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fAntiSpy));
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.countTrayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manualTrayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoTrayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeTrayMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,11 +71,19 @@
             // trayMenu
             // 
             this.trayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.countTrayMenuItem,
             this.manualTrayMenuItem,
             this.autoTrayMenuItem,
             this.closeTrayMenuItem});
             this.trayMenu.Name = "trayMenu";
-            this.trayMenu.Size = new System.Drawing.Size(153, 92);
+            this.trayMenu.Size = new System.Drawing.Size(153, 114);
+            this.trayMenu.Opening += new System.ComponentModel.CancelEventHandler(this.trayMenu_Opening);
+            // 
+            // countTrayMenuItem
+            // 
+            this.countTrayMenuItem.Name = "countTrayMenuItem";
+            this.countTrayMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.countTrayMenuItem.Text = "count";
             // 
             // manualTrayMenuItem
             // 
@@ -328,6 +337,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Button btnOpenManualPath;
         private System.Windows.Forms.Button btnOpenLanPath;
+        private System.Windows.Forms.ToolStripMenuItem countTrayMenuItem;
     }
 }
 
